@@ -18,6 +18,7 @@ export const metadata: Metadata = {
     description:
       'Modern dining, crafted with warmth. Explore the menu, book a table, and enjoy a premium restaurant experience.',
     type: 'website',
+    images: [{ url: '/images/og-image.svg', width: 1200, height: 630, alt: 'Maison Dine restaurant landing page' }],
   },
 };
 
@@ -33,7 +34,7 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body suppressHydrationWarning>
+      <body suppressHydrationWarning className="antialiased">
         <Providers>{children}</Providers>
       </body>
     </html>

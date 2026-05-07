@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#120F0B"/><stop offset=".55" stop-color="#3A2418"/><stop offset="1" stop-color="#D59A5B"/></linearGradient></defs>
+<rect width="1200" height="630" fill="url(#g)"/>
+<circle cx="930" cy="180" r="210" fill="#F0C27B" opacity=".15"/>
+<circle cx="230" cy="500" r="250" fill="#FFF7EA" opacity=".08"/>
+<text x="90" y="205" fill="#FFF7EA" font-family="Georgia, serif" font-size="78" font-weight="700">Maison Dine</text>
+<text x="90" y="292" fill="#F0C27B" font-family="Arial, sans-serif" font-size="34">Modern dining, crafted with warmth.</text>
+<text x="90" y="372" fill="#B8AFA2" font-family="Arial, sans-serif" font-size="27">Bilingual Restaurant Landing Page · Dark/Light · Next.js</text>
+<text x="890" y="410" font-size="150">🍽️</text>
+</svg>

@@ -1,157 +1,157 @@
-import React, { useState, useEffect } from 'react';
-import { Moon, Sun, Globe, Menu, X } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { Globe, Menu, Moon, Sun, X } from 'lucide-react';
 import { useTheme } from 'next-themes';
-import { useLanguage } from '../contexts/LanguageContext';
-import { Button } from './ui/Button';
-import { cn } from '../lib/utils';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { useMounted } from '@/hooks/use-mounted';
+import { Button } from '@/components/ui/Button';
+import { cn } from '@/lib/utils';
 
 interface HeaderProps {
   onNavigate?: (page: 'home' | 'signin' | 'signup') => void;
 }
 
+const navLinks = [
+  { key: 'home', href: '#home' },
+  { key: 'menu', href: '#menu' },
+  { key: 'about', href: '#about' },
+  { key: 'gallery', href: '#gallery' },
+  { key: 'reviews', href: '#reviews' },
+  { key: 'location', href: '#location' },
+];
+
 export const Header: React.FC<HeaderProps> = ({ onNavigate }) => {
-  const { theme, setTheme } = useTheme();
+  const mounted = useMounted();
+  const { resolvedTheme, setTheme } = useTheme();
   const { language, setLanguage, t } = useLanguage();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-    window.addEventListener('scroll', handleScroll);
+    const handleScroll = () => setIsScrolled(window.scrollY > 24);
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navLinks = [
-    { key: 'home', href: '#home' },
-    { key: 'menu', href: '#menu' },
-    { key: 'about', href: '#about' },
-    { key: 'gallery', href: '#gallery' },
-    { key: 'reviews', href: '#reviews' },
-    { key: 'location', href: '#location' },
-  ];
+  const scrollToSection = (href: string) => {
+    setIsMobileMenuOpen(false);
+    document.querySelector(href)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
+  const toggleTheme = () => {
+    setTheme(resolvedTheme === 'dark' ? 'light' : 'dark');
+  };
 
   return (
     <header
       className={cn(
-        'fixed top-0 inset-x-0 z-50 transition-all duration-300',
+        'fixed inset-x-0 top-0 z-50 transition-all duration-300',
         isScrolled
-          ? 'bg-background/80 backdrop-blur-lg border-b border-border shadow-sm'
+          ? 'border-b border-border bg-background/82 shadow-sm backdrop-blur-xl'
           : 'bg-transparent'
       )}
     >
-      <div className="max-w-[1280px] mx-auto px-6 lg:px-12">
-        <div className="flex items-center justify-between h-20">
-          {/* Logo */}
+      <div className="mx-auto max-w-[1280px] px-5 sm:px-6 lg:px-12">
+        <div className="flex h-20 items-center justify-between gap-4">
           <button
+            type="button"
             onClick={() => onNavigate?.('home')}
-            className="text-2xl font-bold text-foreground"
+            className="font-heading text-2xl font-bold tracking-tight text-foreground transition-colors hover:text-primary"
           >
-            <span className="font-heading">
-              {language === 'en' ? 'Maison Dine' : 'ميزون داين'}
-            </span>
+            {language === 'en' ? 'Maison Dine' : 'ميزون داين'}
           </button>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-8">
+          <nav className="hidden items-center gap-7 lg:flex">
             {navLinks.map((link) => (
-              <a
+              <button
                 key={link.key}
-                href={link.href}
-                className="text-sm text-foreground hover:text-primary transition-colors"
+                type="button"
+                onClick={() => scrollToSection(link.href)}
+                className="text-sm text-foreground/80 transition-colors hover:text-primary"
               >
                 {t(link.key)}
-              </a>
+              </button>
             ))}
           </nav>
 
-          {/* Right Section */}
-          <div className="flex items-center gap-3">
-            {/* Language Switcher */}
+          <div className="flex items-center gap-2 sm:gap-3">
             <button
+              type="button"
               onClick={() => setLanguage(language === 'en' ? 'ar' : 'en')}
-              className="flex items-center gap-2 px-3 py-2 rounded-full hover:bg-secondary transition-colors"
+              className="inline-flex items-center gap-2 rounded-full px-3 py-2 transition-colors hover:bg-secondary"
               aria-label="Toggle language"
             >
-              <Globe className="w-4 h-4" />
+              <Globe className="h-4 w-4" />
               <span className="text-sm font-medium">{language === 'en' ? 'AR' : 'EN'}</span>
             </button>
 
-            {/* Theme Switcher */}
             <button
-              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-              className="p-2 rounded-full hover:bg-secondary transition-colors"
+              type="button"
+              onClick={toggleTheme}
+              className="grid h-10 w-10 place-items-center rounded-full transition-colors hover:bg-secondary"
               aria-label="Toggle theme"
             >
-              {theme === 'dark' ? (
-                <Sun className="w-5 h-5" />
+              {!mounted ? (
+                <span className="h-5 w-5 rounded-full border border-border" aria-hidden="true" />
+              ) : resolvedTheme === 'dark' ? (
+                <Sun className="h-5 w-5" />
               ) : (
-                <Moon className="w-5 h-5" />
+                <Moon className="h-5 w-5" />
               )}
             </button>
 
-            {/* Sign In - Desktop */}
             <button
+              type="button"
               onClick={() => onNavigate?.('signin')}
-              className="hidden lg:inline-flex text-sm text-foreground hover:text-primary transition-colors px-4 py-2"
+              className="hidden px-4 py-2 text-sm text-foreground/80 transition-colors hover:text-primary lg:inline-flex"
             >
               {t('signIn')}
             </button>
 
-            {/* Book Table Button - Desktop */}
-            <Button
-              className="hidden lg:inline-flex"
-              onClick={() => document.getElementById('booking')?.scrollIntoView({ behavior: 'smooth' })}
-            >
+            <Button className="hidden lg:inline-flex" onClick={() => scrollToSection('#booking')}>
               {t('bookTable')}
             </Button>
 
-            {/* Mobile Menu Button */}
             <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="lg:hidden p-2 rounded-full hover:bg-secondary transition-colors"
+              type="button"
+              onClick={() => setIsMobileMenuOpen((value) => !value)}
+              className="grid h-10 w-10 place-items-center rounded-full transition-colors hover:bg-secondary lg:hidden"
               aria-label="Toggle menu"
+              aria-expanded={isMobileMenuOpen}
             >
-              {isMobileMenuOpen ? (
-                <X className="w-6 h-6" />
-              ) : (
-                <Menu className="w-6 h-6" />
-              )}
+              {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden bg-background border-t border-border">
-          <nav className="max-w-[1280px] mx-auto px-6 py-6 flex flex-col gap-4">
+        <div className="border-t border-border bg-background/96 backdrop-blur-xl lg:hidden">
+          <nav className="mx-auto flex max-w-[1280px] flex-col gap-2 px-6 py-6">
             {navLinks.map((link) => (
-              <a
+              <button
                 key={link.key}
-                href={link.href}
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="text-base text-foreground hover:text-primary transition-colors py-2"
+                type="button"
+                onClick={() => scrollToSection(link.href)}
+                className="rounded-2xl px-3 py-3 text-start text-base text-foreground transition-colors hover:bg-secondary hover:text-primary"
               >
                 {t(link.key)}
-              </a>
+              </button>
             ))}
             <button
+              type="button"
               onClick={() => {
                 setIsMobileMenuOpen(false);
                 onNavigate?.('signin');
               }}
-              className="text-base text-foreground hover:text-primary transition-colors py-2 text-start"
+              className="rounded-2xl px-3 py-3 text-start text-base text-foreground transition-colors hover:bg-secondary hover:text-primary"
             >
               {t('signIn')}
             </button>
             <Button
               fullWidth
-              onClick={() => {
-                setIsMobileMenuOpen(false);
-                document.getElementById('booking')?.scrollIntoView({ behavior: 'smooth' });
-              }}
+              className="mt-3"
+              onClick={() => scrollToSection('#booking')}
             >
               {t('bookTable')}
             </Button>

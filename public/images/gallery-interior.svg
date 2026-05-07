@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1050" viewBox="0 0 1400 1050" role="img" aria-labelledby="title desc">
+<title id="title">Cozy Nights</title><desc id="desc">Premium restaurant visual for Maison Dine.</desc>
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#120f0b"/><stop offset=".45" stop-color="#21170f"/><stop offset="1" stop-color="#87502e"/></linearGradient>
+<radialGradient id="glow" cx="52%" cy="43%" r="55%"><stop offset="0" stop-color="#f0c27b" stop-opacity=".48"/><stop offset="1" stop-color="#f0c27b" stop-opacity="0"/></radialGradient>
+<filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="34" stdDeviation="32" flood-color="#000" flood-opacity=".42"/></filter>
+</defs>
+<rect width="1400" height="1050" rx="80" fill="url(#bg)"/>
+<rect width="1400" height="1050" rx="80" fill="url(#glow)"/>
+<path d="M108 780c250-135 440-134 680-53 210 71 346 33 504-82v276H108z" fill="#fff7ea" opacity=".08"/>
+<circle cx="700" cy="512" r="315" fill="#fff7ea" opacity=".10"/>
+<circle cx="700" cy="512" r="247" fill="#1b1712" opacity=".55" filter="url(#shadow)"/>
+<circle cx="700" cy="512" r="205" fill="#fff7ea" opacity=".11"/>
+<text x="700" y="548" text-anchor="middle" font-size="190" dominant-baseline="middle">🍽️</text>
+<text x="700" y="816" text-anchor="middle" fill="#fff7ea" font-family="Inter, Arial, sans-serif" font-size="52" font-weight="700" letter-spacing="-.02em">Cozy Nights</text>
+<text x="700" y="878" text-anchor="middle" fill="#f0c27b" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="500">Warm hospitality</text>
+</svg>

@@ -31,6 +31,7 @@ const translations = {
     trustLine: 'Open daily · Fresh seasonal menu · Family friendly',
     rating: 'from 1,200+ guests',
     chefSpecial: "Chef's Special",
+    todaySelection: "Today’s selection",
 
     // Categories
     dinner: 'Dinner',
@@ -176,6 +177,7 @@ const translations = {
     trustLine: 'مفتوح يوميًا · قائمة موسمية طازجة · مناسب للعائلة',
     rating: 'من أكثر من 1,200 ضيف',
     chefSpecial: 'اختيار الشيف',
+    todaySelection: 'اختيار اليوم',
 
     // Categories
     dinner: 'عشاء',

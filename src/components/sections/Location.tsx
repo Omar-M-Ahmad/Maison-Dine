@@ -1,8 +1,9 @@
+import Image from 'next/image';
 import React from 'react';
-import { MapPin, Phone, Mail, Clock } from 'lucide-react';
-import { useLanguage } from '../../contexts/LanguageContext';
-import { Card } from '../ui/Card';
-import { Button } from '../ui/Button';
+import { Clock, Mail, MapPin, Phone } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { Button } from '@/components/ui/Button';
+import { Card } from '@/components/ui/Card';
 
 export const Location: React.FC = () => {
   const { t } = useLanguage();
@@ -15,26 +16,25 @@ export const Location: React.FC = () => {
   ];
 
   return (
-    <section id="location" className="py-16 lg:py-24 bg-soft-card/30">
-      <div className="max-w-[1280px] mx-auto px-6 lg:px-12">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
+    <section id="location" className="bg-soft-card/30 py-16 lg:py-24">
+      <div className="mx-auto max-w-[1280px] px-5 sm:px-6 lg:px-12">
+        <div className="mx-auto mb-12 max-w-3xl text-center">
+          <h2 className="text-3xl font-bold tracking-tight text-foreground md:text-4xl lg:text-5xl">
             {t('location')}
           </h2>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-8">
-          {/* Contact Info */}
+        <div className="grid gap-8 lg:grid-cols-2">
           <div className="space-y-4">
-            {contactInfo.map((info, index) => {
+            {contactInfo.map((info) => {
               const Icon = info.icon;
               return (
-                <Card key={index} variant="default" className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center shrink-0">
-                    <Icon className="w-6 h-6 text-primary" />
+                <Card key={info.label} className="flex items-start gap-4">
+                  <div className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-primary/10">
+                    <Icon className="h-6 w-6 text-primary" />
                   </div>
                   <div>
-                    <p className="font-semibold text-foreground mb-1">{info.label}</p>
+                    <p className="mb-1 font-semibold text-foreground">{info.label}</p>
                     <p className="text-sm text-muted-foreground">{info.value}</p>
                   </div>
                 </Card>
@@ -45,12 +45,14 @@ export const Location: React.FC = () => {
             </Button>
           </div>
 
-          {/* Map Placeholder */}
-          <Card variant="default" className="aspect-[4/3] flex items-center justify-center">
-            <div className="text-center space-y-2">
-              <MapPin className="w-16 h-16 mx-auto text-primary" />
-              <p className="text-muted-foreground">Map Placeholder</p>
-            </div>
+          <Card className="relative min-h-[360px] overflow-hidden p-0">
+            <Image
+              src="/images/map-card.svg"
+              alt="Maison Dine location map preview"
+              fill
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              className="object-cover"
+            />
           </Card>
         </div>
       </div>

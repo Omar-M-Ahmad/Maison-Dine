@@ -2,7 +2,6 @@ import React from 'react';
 import { Facebook, Instagram, Twitter } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { Button } from './ui/Button';
-import { Input } from './ui/Input';
 
 export const Footer: React.FC = () => {
   const { language, t } = useLanguage();
